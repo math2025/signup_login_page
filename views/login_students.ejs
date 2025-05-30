@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/globals.css" />
+    <link rel="stylesheet" href="/styleguide.css" />
+    <link rel="stylesheet" href="/login_parents_style.css" />
+  </head>
+  <body>
+    <div class="landing-page">
+      <div class="div">
+        <div class="overlap">
+          <div class="overlap-group">
+            <img class="group" src="img/group-3.png" />
+            <div class="personalised">Personalised Learning Experience With</div>
+            <p class="discover-the-path-to">Discover The Path To Success With Our Experienced Faculty</p>
+          </div>
+          <div class="frame-wrapper">
+            <div class="frame"><div class="text-wrapper">Kaizen Acedemy</div></div>
+          </div>
+          <div class="div-wrapper"><div class="text-wrapper-2">Get Started</div></div>
+          <div class="group-2">
+            <div class="mdi-play-wrapper"><img class="mdi-play" src="img/mdi-play.svg" /></div>
+            <div class="text-wrapper-3">Watch Video</div>
+          </div>
+          <div class="group-3">
+            <div class="element">20m</div>
+            <div class="element-k">50k</div>
+            <div class="element-2">4k</div>
+            <div class="text-wrapper-4">Views</div>
+            <div class="text-wrapper-5">Students</div>
+            <div class="text-wrapper-6">Certifications</div>
+          </div>
+        </div>
+        <div class="frame-2">
+          <div class="text-wrapper-7">Name*</div>
+          <div class="text-wrapper-8">Email / Phone*</div>
+          <div class="text-wrapper-9">Password*</div>
+          <% if (typeof error !== 'undefined' && error) { %>
+        <p style="color: red; text-align: center;"><%= error %></p>
+        <% } %>
+
+          <form action="/login/students" method="POST" class="login-form">
+            <input
+              name="name"
+              type="text"
+              class="frame-3"
+              placeholder="Name*"
+              required
+            />
+            <input
+              name="email"
+              type="email"
+              class="frame-4"
+              placeholder="Email / Phone*"
+              required
+            />
+            <input
+              name="password"
+              type="password"
+              class="frame-5"
+              placeholder="Password*"
+              required
+            />
+
+            <button type="submit" class="frame-6">
+              <div class="text-wrapper-10">Submit</div>
+            </button>
+          </form>
+          <div class="don-t-have-an">Don’t Have An Account?</div>
+          <a href="/signup/students" class="sign-up">Sign-up</a>
+        </div>
+        <div class="frame-7">
+          <div class="text-wrapper-11">Know More</div>
+          <img class="stash-arrow-up-light" src="img/stash-arrow-up-light.svg" />
+        </div>
+        <div class="login-sign-up">Login / Sign-up</div>
+        <div class="text-wrapper-12">Our Team</div>
+        <div class="text-wrapper-13">Achievements</div>
+        <div class="text-wrapper-14">Testimonials</div>
+        <a href="/login/parents"  class="frame-8">
+          <div class="text-wrapper-15">Parents</div>
+        </a>
+        <a href="/login/students" class="frame-9">
+          <div class="text-wrapper-16">Students</div>
+        </a>
+        <a href="/login/faculty"  class="frame-10">
+          <div class="text-wrapper-17">Faculty</div>
+        </a>
+        <img class="img" src="img/frame-27.png" />
+        <div class="overlap-2">
+          <img class="group-4" src="img/group-8.png" />
+          <div class="text-wrapper-18">Hemanth Kanakala</div>
+        </div>
+        <p class="sydney-business">-sydney Business School<br />-nit Allahabad<br />-5yrs Of Experience</p>
+        <p class="meet-our-team-lorem">
+          Meet Our Team&nbsp;&nbsp;Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Suspendisse Tincidunt
+          Sagittis Eros. Quisque Quis Euismod Lorem. Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
+          Suspendisse Tincidunt Sagittis Eros. Quisque Quis Euismod Lorem.lorem Ipsum Dolor Sit Amet, Consectetur
+          Adipiscing Elit. Suspendisse Tincidunt Sagittis Eros. Quisque Quis Euismod Lorem.
+        </p>
+        <p class="lorem-ipsum-dolor">
+          Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Suspendisse Tincidunt Sagittis Eros. Quisque Quis
+          Euismod Lorem.
+        </p>
+        <p class="at-kaizen-education">
+          At Kaizen Education Centre, We Are Committed To Providing High-quality Educational Services That Meet The
+          Unique Needs Of Our Students.
+        </p>
+        <div class="frame-11">
+          <div class="text-wrapper-19">Name</div>
+          <div class="text-wrapper-20">Achieved Reward</div>
+        </div>
+        <div class="frame-12">
+          <div class="text-wrapper-19">Name</div>
+          <div class="text-wrapper-20">Achieved Reward</div>
+        </div>
+        <div class="frame-13">
+          <div class="text-wrapper-21">Name</div>
+          <div class="text-wrapper-22">Achieved Reward</div>
+        </div>
+        <div class="frame-14">
+          <div class="text-wrapper-21">Name</div>
+          <div class="text-wrapper-22">Achieved Reward</div>
+        </div>
+        <div class="frame-15">
+          <div class="text-wrapper-23">Name</div>
+          <div class="text-wrapper-24">Achieved Reward</div>
+        </div>
+        <div class="frame-16">
+          <div class="text-wrapper-25">Name</div>
+          <div class="text-wrapper-26">Achieved Reward</div>
+        </div>
+        <div class="frame-17">
+          <div class="text-wrapper-25">Name</div>
+          <div class="text-wrapper-26">Achieved Reward</div>
+        </div>
+        <div class="frame-18">
+          <div class="overlap-group-wrapper">
+            <div class="overlap-group-2">
+              <div class="frame-19">
+                <div class="text-wrapper-27">Anuradha</div>
+                <div class="text-wrapper-28">Parent</div>
+                <div class="frame-20"></div>
+              </div>
+              <p class="p">
+                “i Highly Recommend Kaizen Education Centre To Anyone Looking For Personalized And Effective Educational
+                Services. Their Tutors Are Knowledgeable, Experienced, And Dedicated To Helping Students Achieve Their
+                Goals.”
+              </p>
+            </div>
+          </div>
+          <div class="overlap-group-wrapper">
+            <div class="overlap-group-2">
+              <div class="frame-19">
+                <div class="text-wrapper-29">Hari</div>
+                <div class="text-wrapper-28">Parent</div>
+                <div class="frame-21"></div>
+              </div>
+              <p class="p">
+                “my Son Has Been Attending Kaizen Education Centre&#39;s Test Preparation Program, And I Am Very
+                Impressed With The Results. His Scores Have Significantly Improved, And He Has Gained More Confidence In
+                His Abilities.”
+              </p>
+            </div>
+          </div>
+          <div class="overlap-group-wrapper">
+            <div class="overlap-group-2">
+              <div class="frame-19">
+                <div class="text-wrapper-29">Hari</div>
+                <div class="text-wrapper-28">Parent</div>
+                <div class="frame-22"></div>
+              </div>
+              <p class="p">Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.</p>
+            </div>
+          </div>
+          <div class="overlap-group-wrapper">
+            <div class="overlap-group-2">
+              <div class="frame-19">
+                <div class="text-wrapper-29">Hari</div>
+                <div class="text-wrapper-28">Parent</div>
+                <div class="frame-23"></div>
+              </div>
+              <p class="p">Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.</p>
+            </div>
+          </div>
+        </div>
+        <div class="group-wrapper">
+          <div class="group-5">
+            <div class="text-wrapper-30">Let’s Connect</div>
+            <div class="frame-24">
+              <div class="text-wrapper-31">Enter Your Email</div>
+              <div class="ENQUIRY-wrapper"><div class="ENQUIRY">Enquiry</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="frame-25">
+          <div class="text-wrapper-32">About Us</div>
+          <div class="text-wrapper-33">My Account</div>
+          <div class="text-wrapper-34">Pricing</div>
+          <div class="text-wrapper-35">Resources</div>
+        </div>
+        <div class="frame-26">
+          <img class="fe-facebook" src="img/fe-facebook.svg" />
+          <img class="hugeicons-new" src="img/hugeicons-new-twitter-rectangle.svg" />
+          <img class="streamline-instagram" src="img/streamline-instagram-solid.svg" />
+          <img class="qlementine-icons" src="img/qlementine-icons-youtube-fill-16.svg" />
+        </div>
+        <img class="line" src="img/line-1.svg" />
+        <p class="element-kaizen-academy">@2025 Kaizen Academy.all Rights Reserved</p>
+        <div class="text-wrapper-36">Terms Of Use</div>
+        <div class="text-wrapper-37">Privacy Policy.</div>
+        <div class="navbar">
+          <div class="frame-27"><div class="text-wrapper-38">About</div></div>
+          <div class="IB-cirrculam-wrapper"><div class="text-wrapper-38">Ib Cirrculam</div></div>
+          <div class="IGCSE-wrapper"><div class="text-wrapper-38">Igcse</div></div>
+          <div class="AP-wrapper"><div class="text-wrapper-38">Ap</div></div>
+          <div class="frame-28"><div class="text-wrapper-38">Resources</div></div>
+          <div class="login-sign-up-wrapper"><div class="login-sign-up-2">Login/sign-up</div></div>
+          <div class="frame-29"></div>
+          <div class="frame-30">
+            <div class="iconamoon-search-wrapper">
+              <img class="iconamoon-search" src="img/iconamoon-search-light.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+(function() {
+  // grab the artboard and its container
+  const artboard = document.querySelector('.landing-page .div');
+  const container = document.querySelector('.landing-page');
+  function rescale() {
+    // compute scale factor (viewport width ÷ design width)
+    const scale = window.innerWidth / 1920;
+    // apply transform to artboard
+    artboard.style.transformOrigin = 'top left';
+    artboard.style.transform = 'scale(' + scale + ')';
+    // ensure container grows tall enough
+    container.style.height = (4645 * scale) + 'px';
+    // prevent any sideways scroll
+    document.documentElement.style.overflowX = 'hidden';
+    document.body.style.overflowX = 'hidden';
+  }
+  // re-run on resize
+  window.addEventListener('resize', rescale);
+  // run once to initialize
+  rescale();
+})();
+</script>
+
+  </body>
+</html>
