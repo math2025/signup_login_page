@@ -1,10 +1,25 @@
 const mongoose = require('mongoose');
-const connect = mongoose.connect("mongodb://localhost:27017/student_data");
+require('dotenv').config();
 
-connect.then(() => {
+// MongoDB connection string (ensure this is correct)
+const dbURI = process.env.MONGO_URI;
+
+// Connect to MongoDB
+mongoose.connect(dbURI, {
+    serverSelectionTimeoutMS: 10000 // Timeout after 10 seconds
+}).then(() => {
     console.log("Database Connected Successfully");
-}).catch(() => {
-    console.log("Database cannot be Connected");
+}).catch((err) => {
+    console.error("Database connection failed:", err.message);
+
+    // Provide additional debugging information
+    if (err.name === 'MongoNetworkError') {
+        console.error("Network error: Please check your internet connection or MongoDB URI.");
+    } else if (err.name === 'MongoParseError') {
+        console.error("URI parsing error: Please verify your MongoDB connection string.");
+    }
+
+    process.exit(1); // Exit the process if the database cannot connect
 });
 
 // Create Schema
@@ -28,6 +43,6 @@ const Loginschema = new mongoose.Schema({
 });
 
 // Collection
-const collection = new mongoose.model("user_details", Loginschema);
+const collection = mongoose.model("user_details", Loginschema);
 
 module.exports = collection;
