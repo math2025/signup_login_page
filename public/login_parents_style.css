@@ -37,6 +37,83 @@
   left: 629px;
 }
 
+.landing-page .overlap1-2 {
+  position: relative;
+  height: 811px;
+}
+
+.landing-page .group1-wrapper {
+  position: absolute;
+  width: 765px;
+  height: 600px;
+  top: 139px;
+  left: 53px;
+  transform: rotate(-11.72deg);
+}
+
+.landing-page .overlap1-group-wrapper {
+  height: 600px;
+}
+
+.landing-page .overlap1-group-2 {
+  position: relative;
+  width: 765px;
+  height: 600px;
+}
+
+.landing-page .ellipse1 {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: 0;
+  left: 107px;
+  background-color: #218c9e;
+  border-radius: 300px;
+}
+
+.landing-page .frame1 {
+  position: absolute;
+  width: 765px;
+  height: 317px;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+}
+
+.landing-page .frame1-2 {
+  position: absolute;
+  width: 197px;
+  height: 102px;
+  top: 75px;
+  left: 641px;
+  background-color: #e5a826;
+  border-radius: 200px 200px 5px 5px;
+  transform: rotate(-145.70deg);
+}
+
+.landing-page .frame1-3 {
+  position: absolute;
+  width: 278px;
+  height: 149px;
+  top: 53px;
+  left: 94px;
+  background-color: #961600;
+  border-radius: 200px 200px 5px 5px;
+  transform: rotate(-25.74deg);
+}
+
+.landing-page .frame1-4 {
+  position: absolute;
+  width: 705px;
+  height: 707px;
+  top: 28px;
+  left: 92px;
+  border-radius: 0px 500px 500px 0px;
+  background-image: url(./img/frame-10.png);
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
 .landing-page .personalised {
   position: absolute;
   width: 716px;
