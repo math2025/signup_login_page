@@ -51,7 +51,9 @@
           <div class="text-wrapper-7">Know More</div>
           <img class="stash-arrow-up-light" src="img/stash-arrow-up-light.svg" />
         </div>
-        <div class="login-sign-up">Login / Sign-up</div>
+        <div class="login-sign-up">
+          <a href="/login/students#login-form" class="login-link">Login / Sign-up</a>
+        </div>
         <div class="text-wrapper-8">Our Team</div>
         <div class="text-wrapper-9">Achievements</div>
         <div class="text-wrapper-10">Testimonials</div>
@@ -246,6 +248,12 @@
         </form>
         <% if (typeof error !== 'undefined' && error) { %>
         <p style="color: red; text-align: center;"><%= error %></p>
+        <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            const el = document.getElementById("signup-form");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          });
+        </script>
         <% } %>
           <div class="already-have-an">Already Have An Account?</div>
           <a href="/login/students#login-form" class="log-in">Log-in</a>

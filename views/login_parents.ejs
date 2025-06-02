@@ -53,6 +53,12 @@
           <div class="text-wrapper-9">Password*</div>
           <% if (typeof error !== 'undefined' && error) { %>
         <p style="color: red; text-align: center;"><%= error %></p>
+        <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            const el = document.getElementById("login-form");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          });
+        </script>
         <% } %>
 
           <form action="/login/parents" method="POST" class="login-form">
@@ -89,7 +95,9 @@
           <div class="text-wrapper-11">Know More</div>
           <img class="stash-arrow-up-light" src="img/stash-arrow-up-light.svg" />
         </div>
-        <div class="login-sign-up">Login / Sign-up</div>
+        <div class="login-sign-up">
+          <a href="/signup/parents#signup-form" class="login-link">Login / Sign-up</a>
+        </div>
         <div class="text-wrapper-12">Our Team</div>
         <div class="text-wrapper-13">Achievements</div>
         <div class="text-wrapper-14">Testimonials</div>

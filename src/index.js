@@ -200,7 +200,7 @@ app.post("/login/parents", async (req, res) => {
         res.render("home");
     } catch (err) {
         console.error("Login error:", err);
-        res.render("login_faculty", { error: "An error occurred during login. Please try again." });
+        res.render("login_parents", { error: "An error occurred during login. Please try again." });
     }
 });
 
