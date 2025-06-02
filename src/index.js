@@ -1,20 +1,17 @@
 const express = require("express");
 const path = require("path");
-const { connectToDatabase, collection } = require("../src/config");
+const collection = require("./config");
 const bcrypt = require('bcrypt');
-const serverless = require('serverless-http');
 
 const app = express();
-
+// convert data into json format
 app.use(express.json());
+// Static file
+app.use(express.static("public"));
+
 app.use(express.urlencoded({ extended: false }));
-
-// Set EJS and views path
+//use EJS as the view engine
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "../views"));
-
-// Serve static files from the root-level public folder
-app.use(express.static(path.join(__dirname, "../public")));
 
 app.get("/", (req, res) => {
     res.render("login_students");
@@ -54,7 +51,6 @@ app.get("/signup/faculty", (req, res) => {
 
 // Signup/faculty Route
 app.post("/signup/faculty", async (req, res) => {
-    await connectToDatabase();
     const { name, email, password, confirmPassword } = req.body;
 
     // Validation: check if passwords match
@@ -90,7 +86,6 @@ app.post("/signup/faculty", async (req, res) => {
 
 // Signup/parents Route
 app.post("/signup/parents", async (req, res) => {
-    await connectToDatabase();
     const { name, email, password, confirmPassword } = req.body;
 
     // Validation: check if passwords match
@@ -126,7 +121,6 @@ app.post("/signup/parents", async (req, res) => {
 
 // Signup/students Route
 app.post("/signup/students", async (req, res) => {
-    await connectToDatabase();
     const { name, email, password, confirmPassword } = req.body;
 
     // Validation: check if passwords match
@@ -162,7 +156,6 @@ app.post("/signup/students", async (req, res) => {
 
 // Login/faculty user 
 app.post("/login/faculty", async (req, res) => {
-    await connectToDatabase();
     const { name, email, password } = req.body;
 
     try {
@@ -188,7 +181,6 @@ app.post("/login/faculty", async (req, res) => {
 
 // Login/parents user 
 app.post("/login/parents", async (req, res) => {
-    await connectToDatabase();
     const { name, email, password } = req.body;
 
     try {
@@ -214,7 +206,6 @@ app.post("/login/parents", async (req, res) => {
 
 // Login/students user 
 app.post("/login/students", async (req, res) => {
-    await connectToDatabase();
     const { name, email, password } = req.body;
 
     try {
@@ -239,5 +230,8 @@ app.post("/login/students", async (req, res) => {
 });
 
 
-
-module.exports = serverless(app);
+// Define Port for Application
+const port = 5000;
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`)
+});
