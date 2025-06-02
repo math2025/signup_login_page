@@ -5,14 +5,16 @@ const bcrypt = require('bcrypt');
 const serverless = require('serverless-http');
 
 const app = express();
-// convert data into json format
-app.use(express.json());
-// Static file
-app.use(express.static("public"));
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-//use EJS as the view engine
+
+// Set EJS and views path
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "../views"));
+
+// Serve static files from the root-level public folder
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.get("/", (req, res) => {
     res.render("login_students");
@@ -230,10 +232,6 @@ app.post("/login/students", async (req, res) => {
     }
 });
 
-// Define Port for Application
-// const port = 5000;
-// app.listen(port, () => {
-//     console.log(`Server listening on port ${port}`)
-// });
+
 
 module.exports = serverless(app);
