@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const collection = require("../src/config");
+const { connectToDatabase, collection } = require("../src/config");
 const bcrypt = require('bcrypt');
 const serverless = require('serverless-http');
 
@@ -54,6 +54,7 @@ app.get("/signup/faculty", (req, res) => {
 
 // Signup/faculty Route
 app.post("/signup/faculty", async (req, res) => {
+    await connectToDatabase();
     const { name, email, password, confirmPassword } = req.body;
 
     // Validation: check if passwords match
@@ -89,6 +90,7 @@ app.post("/signup/faculty", async (req, res) => {
 
 // Signup/parents Route
 app.post("/signup/parents", async (req, res) => {
+    await connectToDatabase();
     const { name, email, password, confirmPassword } = req.body;
 
     // Validation: check if passwords match
@@ -124,6 +126,7 @@ app.post("/signup/parents", async (req, res) => {
 
 // Signup/students Route
 app.post("/signup/students", async (req, res) => {
+    await connectToDatabase();
     const { name, email, password, confirmPassword } = req.body;
 
     // Validation: check if passwords match
@@ -159,6 +162,7 @@ app.post("/signup/students", async (req, res) => {
 
 // Login/faculty user 
 app.post("/login/faculty", async (req, res) => {
+    await connectToDatabase();
     const { name, email, password } = req.body;
 
     try {
@@ -184,6 +188,7 @@ app.post("/login/faculty", async (req, res) => {
 
 // Login/parents user 
 app.post("/login/parents", async (req, res) => {
+    await connectToDatabase();
     const { name, email, password } = req.body;
 
     try {
@@ -209,6 +214,7 @@ app.post("/login/parents", async (req, res) => {
 
 // Login/students user 
 app.post("/login/students", async (req, res) => {
+    await connectToDatabase();
     const { name, email, password } = req.body;
 
     try {
