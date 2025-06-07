@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 //use EJS as the view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "..", "views"));
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 const session = require("express-session");
 
