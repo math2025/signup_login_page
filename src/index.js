@@ -13,6 +13,14 @@ app.use(express.urlencoded({ extended: false }));
 //use EJS as the view engine
 app.set("view engine", "ejs");
 
+const session = require("express-session");
+
+app.use(session({
+  secret: 'your-secret-key', // Replace with strong key
+  resave: false,
+  saveUninitialized: true
+}));
+
 app.get("/", (req, res) => {
     res.render("login_students");
 });
@@ -47,6 +55,14 @@ app.get("/signup/parents", (req, res) => {
 
 app.get("/signup/faculty", (req, res) => {
     res.render("signup_faculty");
+});
+
+app.get("/home", (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login"); // or send 403
+    }
+
+    res.render("home", { user: req.session.user });
 });
 
 // Signup/faculty Route
@@ -172,7 +188,9 @@ app.post("/login/faculty", async (req, res) => {
         }
 
         // Login successful
-        res.render("home");
+        res.redirect("/home", {
+            user
+        });
     } catch (err) {
         console.error("Login error:", err);
         res.render("login_faculty", { error: "An error occurred during login. Please try again." });
@@ -197,7 +215,9 @@ app.post("/login/parents", async (req, res) => {
         }
 
         // Login successful
-        res.render("home");
+        res.redirect("/home", {
+            user
+        });
     } catch (err) {
         console.error("Login error:", err);
         res.render("login_parents", { error: "An error occurred during login. Please try again." });
@@ -221,8 +241,11 @@ app.post("/login/students", async (req, res) => {
             return res.render("login_students", { error: "Incorrect password." });
         }
 
-        // Login successful
-        res.render("home");
+        // ✅ Store user in session
+        req.session.user = user;
+
+        // ✅ Redirect
+        res.redirect("/home");
     } catch (err) {
         console.error("Login error:", err);
         res.render("login_students", { error: "An error occurred during login. Please try again." });
