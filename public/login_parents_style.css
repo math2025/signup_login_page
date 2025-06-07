@@ -109,7 +109,7 @@
   top: 28px;
   left: 92px;
   border-radius: 0px 500px 500px 0px;
-  background-image: url(./img/frame-10.png);
+  background-image: url(/img/frame-10.png);
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -960,7 +960,7 @@
   top: 31px;
   left: 34px;
   border-radius: 50px;
-  background-image: url(./img/frame-43-3.png);
+  background-image: url(/img/frame-43-3.png);
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -1001,7 +1001,7 @@
   top: 31px;
   left: 34px;
   border-radius: 50px;
-  background-image: url(./img/image.png);
+  background-image: url(/img/image.png);
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -1013,7 +1013,7 @@
   top: 31px;
   left: 34px;
   border-radius: 50px;
-  background-image: url(./img/frame-43-2.png);
+  background-image: url(/img/frame-43-2.png);
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -1025,7 +1025,7 @@
   top: 31px;
   left: 34px;
   border-radius: 50px;
-  background-image: url(./img/frame-43.png);
+  background-image: url(/img/frame-43.png);
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -1375,7 +1375,7 @@
   height: 48px;
   top: 15px;
   left: 936px;
-  background-image: url(./img/frame-1.png);
+  background-image: url(/img/frame-1.png);
   background-size: cover;
   background-position: 50% 50%;
 }
