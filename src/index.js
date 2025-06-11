@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const collection = require("./config");
 const bcrypt = require('bcrypt');
+const session = require("express-session");
+const { google } = require("googleapis");
 
 const app = express();
 // convert data into json format
@@ -15,13 +17,28 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "..", "views"));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-const session = require("express-session");
 
 app.use(session({
   secret: 'your-secret-key', // Replace with strong key
   resave: false,
   saveUninitialized: true
 }));
+
+// Google OAuth2 Setup 👇
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  "http://localhost:5000/auth/google/callback"
+);
+oauth2Client.setCredentials({
+  refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+});
+
+// Google Drive API instance
+const drive = google.drive({
+  version: "v3",
+  auth: oauth2Client
+});
 
 app.get("/", (req, res) => {
     res.render("login_students");
@@ -59,12 +76,93 @@ app.get("/signup/faculty", (req, res) => {
     res.render("signup_faculty");
 });
 
-app.get("/home", (req, res) => {
-    if (!req.session.user) {
-        return res.redirect("/login"); // or send 403
-    }
+// ---------- Google OAuth Routes -------------
 
-    res.render("home", { user: req.session.user, apiKey: process.env.API_KEY, rootFolderId: process.env.ROOT_FOLDER_ID });
+// Initiate OAuth flow
+app.get("/auth/google", (req, res) => {
+  const scopes = [
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ];
+
+  const authUrl = oauth2Client.generateAuthUrl({
+    access_type: "offline",
+    scope: scopes
+  });
+
+  res.redirect(authUrl);
+});
+
+// Handle OAuth callback
+app.get("/auth/google/callback", async (req, res) => {
+  const code = req.query.code;
+  if (!code) {
+    return res.redirect("/login");
+  }
+
+  try {
+    const { tokens } = await oauth2Client.getToken(code);
+    oauth2Client.setCredentials(tokens);
+    req.session.tokens = tokens; // Save tokens in session
+
+    // Optionally get user profile
+    const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
+    const { data: profile } = await oauth2.userinfo.get();
+
+    // Save profile info in session
+    req.session.user = profile;
+
+    res.redirect("/home");
+  } catch (error) {
+    console.error("OAuth Callback Error:", error);
+    res.render("login_students", { error: "Google Authentication Failed." });
+  }
+});
+
+// Home Route
+app.get("/home", async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+
+  try {
+    // Example: List files in Drive
+    const response = await drive.files.list({
+      pageSize: 5,
+      fields: "files(id, name)"
+    });
+
+    const files = response.data.files;
+
+    res.render("home", {
+      user: req.session.user,
+      files: files,
+      apiKey: process.env.API_KEY,
+      rootFolderId: process.env.ROOT_FOLDER_ID
+    });
+  } catch (err) {
+    console.error("Drive API error:", err);
+    res.render("home", { user: req.session.user, files: [], apiKey: "", rootFolderId: "" });
+  }
+});
+
+// Route to serve PDF files by ID
+app.get("/pdf/:id", async (req, res) => {
+  const fileId = req.params.id;
+
+  try {
+    const response = await drive.files.get(
+      { fileId, alt: "media" },
+      { responseType: "stream" }
+    );
+
+    res.setHeader("Content-Type", "application/pdf");
+    response.data.pipe(res);
+  } catch (error) {
+    console.error("Error serving PDF:", error);
+    res.status(404).send("File not found or access denied.");
+  }
 });
 
 // Signup/faculty Route

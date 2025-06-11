@@ -199,9 +199,8 @@
                         pdfDiv.style.cursor = 'pointer';
                         pdfDiv.style.margin = '5px 0';
                         pdfDiv.addEventListener('click', () => {
-                            const pdfUrl = `https://drive.google.com/file/d/${file.id}/preview`;
+                            const pdfUrl = `/pdf/${file.id}`;
                             pdfDisplay.data = pdfUrl;
-
                             document.getElementById('pdf-viewer').style.display = 'block';
                         });
                         folderList.appendChild(pdfDiv);
