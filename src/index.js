@@ -64,7 +64,7 @@ app.get("/home", (req, res) => {
         return res.redirect("/login"); // or send 403
     }
 
-    res.render("home", { user: req.session.user });
+    res.render("home", { user: req.session.user, apiKey: process.env.API_KEY, rootFolderId: process.env.ROOT_FOLDER_ID });
 });
 
 // Signup/faculty Route

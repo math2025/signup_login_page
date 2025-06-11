@@ -91,6 +91,142 @@
         </div>
       </div>
     </aside>
+
+    <!-- Library Panel -->
+    <div class="library-panel" style="display: none; padding: 20px;">
+    <h2>Library</h2>
+    <div id="library-content">
+        <h3>Loading Library...</h3>
+        <button id="back-button" style="margin-bottom: 10px; display: none;">⬅️ Back</button>
+        <div id="folder-list"></div>
+        <div id="pdf-viewer" style="margin-top: 20px; display: none;">
+            <div class="card">
+                <div class="card-body">
+                <object id="pdf-display" type="application/pdf" width="100%" height="600px"></object>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
   </div>
+
+  <script>
+    const mainPanel = document.querySelector('.main-panel');
+    const profilePanel = document.querySelector('.profile-panel');
+    const libraryPanel = document.querySelector('.library-panel');
+
+    // Select the Library link in the sidebar
+    const navLinks = document.querySelectorAll('.nav a');
+    const libraryLink = navLinks[4];  // The 5th link is Library (index 4)
+
+    libraryLink.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Hide main and profile panels
+        mainPanel.style.display = 'none';
+        profilePanel.style.display = 'none';
+
+        // Show the library panel
+        libraryPanel.style.display = 'block';
+
+        // Load the library contents
+        loadLibraryContents();
+    });
+
+    // Optional: Restore dashboard when other links are clicked
+    navLinks.forEach((link, index) => {
+        if (index !== 4) {  // Not the Library link
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Show main and profile panels
+            mainPanel.style.display = 'block';
+            profilePanel.style.display = 'block';
+
+            // Hide library panel
+            libraryPanel.style.display = 'none';
+        });
+        }
+    });
+
+    // Drive API setup
+
+    const apiKey = '<%= apiKey %>';
+    const rootFolderId = '<%= rootFolderId %>';
+
+    const folderList = document.getElementById('folder-list');
+    const pdfDisplay = document.getElementById('pdf-display');
+    const backButton = document.getElementById('back-button');
+
+    const folderStack = [];  // Keeps track of parent folders
+
+    function loadLibraryContents() {
+        folderStack.length = 0;  // Clear stack on initial load
+        listFolderContents(rootFolderId);
+    }
+
+    function listFolderContents(folderId) {
+        folderList.innerHTML = '<p>Loading...</p>';
+
+        // Show/hide the Back button
+        if (folderStack.length > 0) {
+            backButton.style.display = 'inline-block';
+        } else {
+            backButton.style.display = 'none';
+        }
+
+        fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}&fields=files(id,name,mimeType,parents)`)
+            .then(response => response.json())
+            .then(data => {
+                folderList.innerHTML = '';  // Clear previous contents
+
+                data.files.forEach(file => {
+                    if (file.mimeType === 'application/vnd.google-apps.folder') {
+                        const folderDiv = document.createElement('div');
+                        folderDiv.textContent = `📁 ${file.name}`;
+                        folderDiv.style.cursor = 'pointer';
+                        folderDiv.style.margin = '5px 0';
+                        folderDiv.addEventListener('click', () => {
+                            // Push current folder to stack
+                            folderStack.push(folderId);
+                            listFolderContents(file.id);
+                        });
+                        folderList.appendChild(folderDiv);
+                    } else if (file.mimeType === 'application/pdf') {
+                        const pdfDiv = document.createElement('div');
+                        pdfDiv.textContent = `📄 ${file.name}`;
+                        pdfDiv.style.cursor = 'pointer';
+                        pdfDiv.style.margin = '5px 0';
+                        pdfDiv.addEventListener('click', () => {
+                            const pdfUrl = `https://drive.google.com/file/d/${file.id}/preview`;
+                            pdfDisplay.data = pdfUrl;
+
+                            document.getElementById('pdf-viewer').style.display = 'block';
+                        });
+                        folderList.appendChild(pdfDiv);
+                    }
+                });
+
+                if (data.files.length === 0) {
+                    folderList.innerHTML = '<p>No files found in this folder.</p>';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                folderList.innerHTML = '<p>Error loading folder contents.</p>';
+            });
+    }
+
+    // Back button click event
+    backButton.addEventListener('click', () => {
+        if (folderStack.length > 0) {
+            const previousFolderId = folderStack.pop();
+            listFolderContents(previousFolderId);
+        }
+    });
+    </script>
+
+
 </body>
 </html>
