@@ -99,11 +99,21 @@
         <h3>Loading Library...</h3>
         <button id="back-button" style="margin-bottom: 10px; display: none;">⬅️ Back</button>
         <div id="folder-list"></div>
-        <div id="pdf-viewer" style="margin-top: 20px; display: none;">
-            <div class="card">
-                <div class="card-body">
-                <object id="pdf-display" type="application/pdf" width="100%" height="600px"></object>
-                </div>
+
+        <!-- PDF Viewer Section -->
+        <div id="pdf-container" style="position: relative; width: 100vw; height: 600px; border: 1px solid #ccc; display: none;">
+            <!-- Embed Google Drive Viewer -->
+            <iframe id="pdf-viewer" 
+                    src="" 
+                    width="100%" 
+                    height="100%" 
+                    style="border: none;">
+            </iframe>
+
+            <!-- Custom Controls -->
+            <div id="pdf-controls" style="position: absolute; top: 10px; right: 10px;">
+                <button id="fullscreen-button" style="margin-right: 5px;">🔍 Full Screen</button>
+                <button id="open-tab-button">🖥️ Open in New Tab</button>
             </div>
         </div>
     </div>
@@ -156,7 +166,7 @@
     const rootFolderId = '<%= rootFolderId %>';
 
     const folderList = document.getElementById('folder-list');
-    const pdfDisplay = document.getElementById('pdf-display');
+    const pdfDisplay = document.getElementById('pdf-viewer');
     const backButton = document.getElementById('back-button');
 
     const folderStack = [];  // Keeps track of parent folders
@@ -200,8 +210,8 @@
                         pdfDiv.style.margin = '5px 0';
                         pdfDiv.addEventListener('click', () => {
                             const pdfUrl = `/pdf/${file.id}`;
-                            pdfDisplay.data = pdfUrl;
-                            document.getElementById('pdf-viewer').style.display = 'block';
+                            pdfDisplay.src = pdfUrl;
+                            document.getElementById('pdf-container').style.display = 'block';
                         });
                         folderList.appendChild(pdfDiv);
                     }
@@ -224,8 +234,78 @@
             listFolderContents(previousFolderId);
         }
     });
+
+    // JavaScript for PDF Viewer Features
+
+    // Full-screen functionality
+    document.getElementById('fullscreen-button').addEventListener('click', () => {
+        const pdfViewer = document.getElementById('pdf-viewer');
+        if (pdfViewer.requestFullscreen) {
+            pdfViewer.requestFullscreen();
+        } else if (pdfViewer.webkitRequestFullscreen) {
+            pdfViewer.webkitRequestFullscreen();
+        } else if (pdfViewer.msRequestFullscreen) {
+            pdfViewer.msRequestFullscreen();
+        }
+    });
+
+    // Open PDF in a new tab
+    document.getElementById('open-tab-button').addEventListener('click', () => {
+        const pdfUrl = document.getElementById('pdf-viewer').src;
+        window.open(pdfUrl, '_blank');
+    });
+
+    // Function to dynamically load PDF and show viewer
+    function loadPdf(fileId) {
+        const previewLink = `https://drive.google.com/file/d/${fileId}/preview`;
+        document.getElementById('pdf-viewer').src = previewLink;
+        document.getElementById('pdf-container').style.display = 'block';
+    }
     </script>
 
+  <style>
+    /* Enable more scrolling for large content */
+    body {
+        overflow-y: scroll; /* Ensure vertical scrolling */
+        height: 200vh; /* Extend height to allow more scrolling */
+    }
 
+    html {
+        scroll-behavior: smooth; /* Smooth scrolling */
+    }
+
+    /* Styling for PDF Viewer and Buttons */
+    #pdf-container {
+        position: relative;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        width: 90vw; /* Make the viewer fit the screen horizontally */
+        height: 80vh; /* Adjust height for better visibility */
+        margin-bottom: 100px; /* Add more space at the bottom for better scrolling */
+    }
+
+    #pdf-controls button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    #pdf-controls button:hover {
+        background-color: #0056b3;
+    }
+
+    #pdf-controls {
+        display: flex;
+        gap: 10px;
+    }
+  </style>
 </body>
 </html>
